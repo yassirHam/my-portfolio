@@ -9,8 +9,9 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# Enable CORS for all routes
-CORS(app)  # Allow all origins for all routes
+# Enable CORS for all routes (Debug mode: allows all origins)
+CORS(app, resources={r"/*": {"origins": "*"}})
+
 # Email Configuration
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
@@ -24,25 +25,35 @@ mail = Mail(app)
 def home():
     return jsonify({"message": "Backend is running!"}), 200
 
-@app.route("/send-email", methods=["POST"])
+@app.route("/send-message", methods=["OPTIONS", "POST"])
 def send_email():
-    data = request.json
-    name = data.get("name")
-    email = data.get("email")
-    mobile = data.get("mobile")
-    subject = data.get("subject")
-    message = data.get("message")
+    if request.method == "OPTIONS":
+        # Handle preflight request (CORS check)
+        return jsonify({"message": "CORS preflight OK"}), 200
 
     try:
+        data = request.json
+        name = data.get("name")
+        email = data.get("email")
+        mobile = data.get("mobile")
+        subject = data.get("subject")
+        message = data.get("message")
+
+        if not name or not email or not message:
+            return jsonify({"message": "Missing required fields"}), 400
+
         msg = Message(subject=f"New Contact Form Submission: {subject}",
                       sender=email,
                       recipients=[os.getenv("EMAIL_USER")],
                       body=f"Name: {name}\nEmail: {email}\nMobile: {mobile}\n\nMessage:\n{message}")
         mail.send(msg)
+
         return jsonify({"message": "Email sent successfully!"}), 200
+
     except Exception as e:
+        print("Error:", str(e))  # Log error to backend
         return jsonify({"message": "Failed to send email", "error": str(e)}), 500
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))  # Use dynamic port for deployment
+    port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port, debug=True)
