@@ -49,3 +49,43 @@ ScrollReveal().reveal('.home-content, .heading', { origin: 'top' });
 ScrollReveal().reveal('.home-img img, .projects-container, .skills-container, contact-form', { origin: 'bottom' });
 ScrollReveal().reveal('.home-content h1, .about-img img', { origin: 'left' });
 ScrollReveal().reveal('.home-content h2, .home-content p, .about-content', { origin: 'right' });
+
+
+document.getElementById("contactForm").addEventListener("submit", async function (event) {
+    event.preventDefault();  // Prevent default form submission
+
+    // Get form data
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const mobile = document.getElementById("mobile").value;
+    const subject = document.getElementById("subject").value;
+    const message = document.getElementById("message").value;
+
+    // Prepare the data to send
+    const formData = {
+        name: name,
+        email: email,
+        mobile: mobile,
+        subject: subject,
+        message: message
+    };
+
+    try {
+        const response = await fetch("http://127.0.0.1:5000/send-email", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        });
+
+        const result = await response.json();
+        document.getElementById("responseMessage").innerText = result.message;
+
+        if (response.ok) {
+            document.getElementById("contactForm").reset(); // Reset form after successful submission
+        }
+    } catch (error) {
+        document.getElementById("responseMessage").innerText = "Error sending message.";
+    }
+});
