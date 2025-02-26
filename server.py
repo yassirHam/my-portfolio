@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_mail import Mail, Message
-from flask_cors import CORS  # Import CORS
+from flask_cors import CORS
 import os
 from dotenv import load_dotenv
 
@@ -16,10 +16,14 @@ CORS(app, resources={r"/send-email": {"origins": "https://yassirham.github.io"}}
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USERNAME'] = os.getenv("EMAIL_USER")  # Your email
-app.config['MAIL_PASSWORD'] = os.getenv("EMAIL_PASS")  # Your app password
+app.config['MAIL_USERNAME'] = os.getenv("EMAIL_USER")
+app.config['MAIL_PASSWORD'] = os.getenv("EMAIL_PASS")
 
 mail = Mail(app)
+
+@app.route("/")
+def home():
+    return jsonify({"message": "Backend is running!"}), 200
 
 @app.route("/send-email", methods=["POST"])
 def send_email():
@@ -41,5 +45,5 @@ def send_email():
         return jsonify({"message": "Failed to send email", "error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=10000, debug=True)
-
+    port = int(os.environ.get("PORT", 5000))  # Use dynamic port for deployment
+    app.run(host="0.0.0.0", port=port, debug=True)
