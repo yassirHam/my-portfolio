@@ -205,16 +205,34 @@ def handle_chat():
     return error_response, 500
 
 
-@app.route("/send-message", methods=["OPTIONS"])
-def message_preflight():
-    return _build_cors_preflight_response()
+@app.route("/send-message", methods=["OPTIONS", "POST"])
+def send_email():
+    if request.method == "OPTIONS":
+        # Handle preflight request (CORS check)
+        return jsonify({"message": "CORS preflight OK"}), 200
 
-def _build_cors_preflight_response():
-    response = jsonify({"status": "preflight"})
-    response.headers.add("Access-Control-Allow-Origin", "https://yassirham.github.io")
-    response.headers.add("Access-Control-Allow-Headers", "Content-Type")
-    response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
-    return response
+    try:
+        data = request.json
+        name = data.get("name")
+        email = data.get("email")
+        mobile = data.get("mobile")
+        subject = data.get("subject")
+        message = data.get("message")
+
+        if not name or not email or not message:
+            return jsonify({"message": "Missing required fields"}), 400
+
+        msg = Message(subject=f"New Contact Form Submission: {subject}",
+                      sender=email,
+                      recipients=[os.getenv("EMAIL_USER")],
+                      body=f"Name: {name}\nEmail: {email}\nMobile: {mobile}\n\nMessage:\n{message}")
+        mail.send(msg)
+
+        return jsonify({"message": "Email sent successfully!"}), 200
+
+    except Exception as e:
+        print("Error:", str(e))  # Log error to backend
+        return jsonify({"message": "Failed to send email", "error": str(e)}), 500
 
 
 if __name__ == "__main__":
