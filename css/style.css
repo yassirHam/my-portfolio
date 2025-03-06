@@ -811,11 +811,11 @@ color: var(--text-color);
   }
 }
 .bot-message a {
-    color: #6d0505;
+    color: var(--text-color);
     text-decoration: underline;
 }
 
 .bot-message strong {
-    color: #9a0a0a;
+    color: #ffff53;
     font-weight: 600;
 }
