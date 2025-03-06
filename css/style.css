@@ -810,3 +810,12 @@ color: var(--text-color);
     transform: rotate(-360deg);
   }
 }
+.bot-message a {
+    color: #6d0505;
+    text-decoration: underline;
+}
+
+.bot-message strong {
+    color: #9a0a0a;
+    font-weight: 600;
+}

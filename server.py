@@ -95,7 +95,24 @@ class ChatBot:
         return self._format_projects()
       elif 'experience' in query:
         return self._format_experiences()
-
+      if any(word in query for word in ["hire", "choose", "select"]):
+        return self._format_why_hire()
+      elif "strength" in query:
+        return self._format_strengths()
+      elif "weakness" in query:
+        return "I tend to deeply focus on solving complex problems, which I manage through timeboxing and regular progress checks"
+      elif "goal" in query or "objective" in query:
+        return self._format_career_goals()
+      elif "challenge" in query:
+        return self._format_challenge()
+      elif "failure" in query:
+        return self._format_failure()
+      elif "success" in query:
+        return self._format_success()
+      elif "contact" in query or "reach" in query:
+        return self._format_contact_info()
+      elif "salary" in query:
+        return "I'm open to discussion based on industry standards and the total compensation package"
       query_vec = self.vectorizer.transform([self._preprocess(query)])
       scores = cosine_similarity(query_vec, self.tfidf_matrix).flatten()
       best_match = self.answer_bank[np.argmax(scores)]
@@ -121,6 +138,41 @@ class ChatBot:
     return "<strong>Experience:</strong><br>" + "<br>".join(
       [f"• {e['position']} at {e['company']}" for e in experiences])
 
+  def _format_why_hire(self):
+    points = self.dataset[0]['hr_questions']['why_hire']
+    return "<strong>Why Hire Me:</strong><br>" + "<br>• ".join([""] + points)
+
+  def _format_strengths(self):
+    points = self.dataset[0]['hr_questions']['strengths']
+    return "<strong>Key Strengths:</strong><br>" + "<br>• ".join([""] + points)
+
+  def _format_career_goals(self):
+    goals = self.dataset[0]['hr_questions']['career_goals']
+    return "<strong>Career Goals:</strong><br>" + "<br>• ".join([""] + goals)
+
+  def _format_contact_info(self):
+    info = self.dataset[0]['personal_info']
+    return f"""
+         <strong>Contact Information:</strong><br>
+         • 📧 Email: {info['email']}<br>
+         • 📱 Phone: {info['phone']}<br>
+         • 🌐 Portfolio: <a href="{info['portfolio']}" target="_blank">{info['portfolio']}</a>
+         """
+
+  def _format_challenge(self):
+    return f"<strong>Biggest Challenge:</strong><br>{self.dataset[0]['interview_answers']['challenge']}"
+
+  def _format_failure(self):
+    return f"<strong>Learning from Failure:</strong><br>{self.dataset[0]['interview_answers']['failure']}"
+
+  def _format_success(self):
+    return f"<strong>Notable Success:</strong><br>{self.dataset[0]['interview_answers']['success']}"
+
+  def _handle_general_query(self, query):
+    query_vec = self.vectorizer.transform([self._preprocess(query)])
+    scores = cosine_similarity(query_vec, self.tfidf_matrix).flatten()
+    best_match = self.answer_bank[np.argmax(scores)]
+    return best_match if scores.max() > 0.2 else "Could you please rephrase your question?"
 
 chatbot = ChatBot()
 

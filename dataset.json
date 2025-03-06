@@ -126,6 +126,30 @@
     ],
     "objective": "To secure an internship opportunity for my Final Year Project (PFA) and further develop my skills in digital transformation and artificial intelligence by contributing to innovative technological projects.",
     "passions": "Digital transformation, software development, enterprise architecture, and database systems."
+  },
+  "hr_questions": {
+    "why_hire": [
+      "Unique combination of technical skills (Python, Java, AI) and business architecture knowledge",
+      "Proven track record of delivering complete projects from concept to deployment",
+      "Strong problem-solving skills demonstrated in hackathons and complex projects",
+      "Adaptability shown through working with diverse tech stacks and international collaborations"
+    ],
+    "strengths": [
+      "Quick learner with ability to master new technologies rapidly",
+      "Excellent communicator fluent in 3 languages",
+      "Leadership experience in team projects",
+      "Commitment to continuous improvement and learning"
+    ],
+    "career_goals": [
+      "Short-term: Lead AI-driven digital transformation projects",
+      "Mid-term: Architect enterprise-level solutions combining AI and business strategy",
+      "Long-term: Mentor next generation of tech leaders in North Africa"
+    ]
+  },
+  "interview_answers": {
+    "challenge": "Led development of AI Matching Platform under tight deadlines while maintaining code quality",
+    "failure": "Initially struggled with time estimation, improved through Agile methodology adoption",
+    "success": "YouTube Summarizer tool adopted by 3 student organizations within first month of release"
   }
 }
 ]
