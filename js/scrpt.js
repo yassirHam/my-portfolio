@@ -1,4 +1,4 @@
-// Sticky navbar and scroll section active link
+
 window.onscroll = () => {
     let header = document.querySelector('.header');
     header.classList.toggle('sticky', window.scrollY > 100);
@@ -20,12 +20,10 @@ window.onscroll = () => {
         }
     });
 
-    // Remove menu icon when scrolling
     menuIcon.classList.remove('bx-x');
     navbar.classList.remove('active');
 };
 
-// Menu icon toggle
 let menuIcon = document.querySelector('#menu-icon');
 let navbar = document.querySelector('.navbar');
 
@@ -34,14 +32,12 @@ menuIcon.onclick = () => {
     navbar.classList.toggle('active');
 };
 
-// Dark/light mode toggle
 let darkModeIcon = document.querySelector('#darkMode-icon');
 darkModeIcon.onclick = () => {
     darkModeIcon.classList.toggle('bx-sun');
     document.body.classList.toggle('dark-mode');
 };
 
-// Scroll reveal animations
 ScrollReveal({
     reset: true,
     distance: '80px',
@@ -53,11 +49,9 @@ ScrollReveal().reveal('.home-img img, .projects-container, .skills-container, .c
 ScrollReveal().reveal('.home-content h1, .about-img img', { origin: 'left' });
 ScrollReveal().reveal('.home-content h2, .home-content p, .about-content', { origin: 'right' });
 
-// Contact form submission
 document.getElementById("contactForm").addEventListener("submit", async function (event) {
     event.preventDefault();  // Prevent default form submission
 
-    // Get form data
     const formData = {
         name: document.getElementById("name").value,
         email: document.getElementById("email").value,
@@ -84,3 +78,29 @@ document.getElementById("contactForm").addEventListener("submit", async function
         console.error("Error:", error);
     }
 });
+// Add to javascript.txt
+async function sendMessage() {
+    const userInput = document.getElementById('userInput');
+    const chatBox = document.getElementById('chatBox');
+
+    if (!userInput.value.trim()) return;
+
+    // Add user message
+    chatBox.innerHTML += `<div class="user-message">You: ${userInput.value}</div>`;
+
+    try {
+        const response = await fetch('/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: userInput.value })
+        });
+
+        const data = await response.json();
+        chatBox.innerHTML += `<div class="bot-message">Bot: ${data.response}</div>`;
+    } catch (error) {
+        chatBox.innerHTML += `<div class="error">Error: Could not get response</div>`;
+    }
+
+    userInput.value = '';
+    chatBox.scrollTop = chatBox.scrollHeight;
+}
