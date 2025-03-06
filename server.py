@@ -31,6 +31,21 @@ app.config['MAIL_USERNAME'] = os.getenv("EMAIL_USER")
 app.config['MAIL_PASSWORD'] = os.getenv("EMAIL_PASS")
 mail = Mail(app)
 
+CORS(app, resources={
+    r"/chat": {
+        "origins": "https://yassirham.github.io",
+        "methods": ["POST", "OPTIONS"],
+        "allow_headers": ["Content-Type"],
+        "supports_credentials": True
+    },
+    r"/send-message": {
+        "origins": "https://yassirham.github.io",
+        "methods": ["POST", "OPTIONS"],
+        "allow_headers": ["Content-Type"],
+        "supports_credentials": True
+    }
+})
+
 
 class ChatBot:
   def __init__(self):
@@ -100,12 +115,15 @@ class ChatBot:
 
   def _format_skills(self):
     skills = self.dataset[0]['skills']
-    return "Skills:\n" + "\n".join([f"- {k}: {', '.join(v)}" for k, v in skills.items()])
+    return "<span style='font-size: 1.1rem; line-height: 1.5;'>Skills:<br>" + \
+           "<br>".join([f"• <strong>{k}</strong>: {', '.join(v)}" for k, v in skills.items()]) + \
+           "</span>"
 
-  def _format_education(self):
-    education = self.dataset[0]['education']
-    return "Education:\n" + "\n".join([f"- {e['degree']} ({e['years']})" for e in education])
-
+  def _format_projects(self):
+    projects = self.dataset[0]['projects']
+    return "<span style='font-size: 1.1rem; line-height: 1.5;'>Projects:<br>" + \
+           "<br>".join([f"• <strong>{p['title']}</strong><br>&nbsp;&nbsp;{p['description']}" for p in projects]) + \
+           "</span>"
   def _format_projects(self):
     projects = self.dataset[0]['projects']
     return "Projects:\n" + "\n".join([f"- {p['title']}: {p['description']}" for p in projects])
@@ -133,7 +151,28 @@ def handle_chat():
     return jsonify({"error": "Internal server error"}), 500
 
 
-# Keep other routes unchanged
+@app.route("/chat", methods=["POST"])
+def handle_chat():
+    try:
+        data = request.get_json()
+        response = jsonify({"response": chatbot.get_response(data['message'])})
+        response.headers.add("Access-Control-Allow-Origin", "https://yassirham.github.io")
+        return response
+    except Exception as e:
+        error_response = jsonify({"error": str(e)})
+        error_response.headers.add("Access-Control-Allow-Origin", "https://yassirham.github.io")
+        return error_response, 500
+
+@app.route("/send-message", methods=["OPTIONS"])
+def message_preflight():
+    return _build_cors_preflight_response()
+
+def _build_cors_preflight_response():
+    response = jsonify({"status": "preflight"})
+    response.headers.add("Access-Control-Allow-Origin", "https://yassirham.github.io")
+    response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+    response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
+    return response
 
 if __name__ == "__main__":
   port = int(os.environ.get("PORT", 5000))

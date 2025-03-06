@@ -85,21 +85,39 @@ async function sendMessage() {
 
     if (!userInput.value.trim()) return;
 
-    chatBox.innerHTML += `<div class="user-message">You: ${userInput.value}</div>`;
+    // Display user message in chat box
+    chatBox.innerHTML += `
+        <div class="user-message">
+            You: ${userInput.value}
+        </div>
+    `;
 
     try {
         const response = await fetch('https://flask-backend-29dd.onrender.com/chat', {
             method: 'POST',
+            mode: 'cors',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message: userInput.value })
         });
 
-        const data = await response.json();
-        chatBox.innerHTML += `<div class="bot-message">Bot: ${data.response}</div>`;
-    } catch (error) {
-        chatBox.innerHTML += `<div class="error">Error: Could not connect to server</div>`;
-    }
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
+        const data = await response.json();
+
+        // Display bot response with formatting
+        chatBox.innerHTML += `
+            <div class="bot-message">
+                ${data.response.replace(/\n/g, '<br>')}
+            </div>
+        `;
+    } catch (error) {
+        console.error('Fetch Error:', error);
+        chatBox.innerHTML += `
+            <div class="error">
+                Error: ${error.message}
+            </div>
+        `;
+    }
     userInput.value = '';
     chatBox.scrollTop = chatBox.scrollHeight;
 }
