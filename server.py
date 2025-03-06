@@ -135,22 +135,6 @@ class ChatBot:
 
 chatbot = ChatBot()
 
-
-@app.route("/chat", methods=["POST"])
-def handle_chat():
-  try:
-    data = request.get_json()
-    if not data or 'message' not in data:
-      return jsonify({"error": "Invalid request format"}), 400
-
-    response = chatbot.get_response(data['message'])
-    return jsonify({"response": response}), 200
-
-  except Exception as e:
-    app.logger.error(f"Chat error: {str(e)}")
-    return jsonify({"error": "Internal server error"}), 500
-
-
 @app.route("/chat", methods=["POST"])
 def handle_chat():
     try:
