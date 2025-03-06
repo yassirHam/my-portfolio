@@ -171,20 +171,20 @@ class ChatBot:
 
 chatbot = ChatBot()
 
+
 @app.route("/chat", methods=["POST"])
 def handle_chat():
-    try:
-        data = request.get_json()
-        response = jsonify({
-            "response": chatbot.get_response(
-                data['message'],
-                data.get('lang', 'en')
-            )
-        })
-        response.headers.add("Access-Control-Allow-Origin", "https://yassirham.github.io")
-        return response
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+  try:
+    data = request.get_json()
+    if 'message' not in data:
+      return jsonify({"error": "Missing message"}), 400
+
+    response_text = chatbot.get_response(data['message'])  # Remove lang handling
+    response = jsonify({"response": response_text})
+    response.headers.add("Access-Control-Allow-Origin", "https://yassirham.github.io")
+    return response
+  except Exception as e:
+    return jsonify({"error": str(e)}), 500
 
 @app.route("/send-message", methods=["POST"])
 def send_email():
