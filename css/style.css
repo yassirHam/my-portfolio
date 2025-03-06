@@ -780,22 +780,6 @@ color: var(--text-color);
     text-align: center;
     animation: pulse 1.5s infinite;
 }
-.language-selector {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 1000;
-}
-
-#languageSelect {
-    padding: 10px;
-    border-radius: 5px;
-    background: var(--main-color);
-    color: white;
-    border: 2px solid var(--text-color);
-    cursor: pointer;
-}
-
 @keyframes pulse {
     0% { opacity: 1; }
     50% { opacity: 0.5; }
