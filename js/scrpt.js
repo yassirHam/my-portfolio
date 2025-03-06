@@ -89,16 +89,16 @@ async function sendMessage() {
 
     const userInput = document.getElementById('userInput');
     const chatBox = document.getElementById('chatBox');
-    const lang = document.getElementById('languageSelect').value;
 
     if (!userInput.value.trim()) {
         isProcessing = false;
         document.getElementById('loading').style.display = 'none';
         return;
     }
+
     chatBox.innerHTML += `
         <div class="user-message">
-            [${lang.toUpperCase()}] You: ${userInput.value}
+            You: ${userInput.value}
         </div>
     `;
 
@@ -111,23 +111,19 @@ async function sendMessage() {
                 const response = await fetch('https://flask-backend-29dd.onrender.com/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        message: userInput.value,
-                        lang: lang
-                    }),
+                    body: JSON.stringify({ message: userInput.value }),
                     signal: controller.signal
                 });
 
                 clearTimeout(timeoutId);
 
-                if (!response.ok) {
-                    throw new Error(`Server error: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
                 const data = await response.json();
+
                 chatBox.innerHTML += `
                     <div class="bot-message">
-                        [${lang.toUpperCase()}] Bot: ${data.response.replace(/\n/g, '<br>')}
+                        ${data.response.replace(/\n/g, '<br>')}
                     </div>
                 `;
 
@@ -135,23 +131,16 @@ async function sendMessage() {
                 break;
             } catch (error) {
                 retryCount++;
-                if (retryCount >= MAX_RETRIES) {
-                    throw error;
-                }
+                if (retryCount >= MAX_RETRIES) throw error;
             }
         }
     } catch (error) {
         console.error('Fetch Error:', error);
-        let errorMessage = 'Connection error. Please try again.';
-        if (error.message.includes('abort')) {
-            errorMessage = 'Request timed out (10s). Please try again.';
-        } else if (error.message.includes('Failed to fetch')) {
-            errorMessage = 'Unable to connect to the server. Please check your internet connection.';
-        }
-
         chatBox.innerHTML += `
             <div class="error">
-                ${errorMessage}
+                ${error.message.includes('abort') ?
+                 'Request timed out (10s)' :
+                 'Connection error. Please try again'}
             </div>
         `;
     } finally {
