@@ -780,6 +780,14 @@ color: var(--text-color);
     text-align: center;
     animation: pulse 1.5s infinite;
 }
+#languageSelect {
+    padding: 8px;
+    border-radius: 5px;
+    background: var(--main-color);
+    color: white;
+    border: 1px solid white;
+    margin-bottom: 10px;
+}
 
 @keyframes pulse {
     0% { opacity: 1; }

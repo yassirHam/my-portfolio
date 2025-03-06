@@ -1,4 +1,3 @@
-
 window.onscroll = () => {
     let header = document.querySelector('.header');
     header.classList.toggle('sticky', window.scrollY > 100);
@@ -50,7 +49,7 @@ ScrollReveal().reveal('.home-content h1, .about-img img', { origin: 'left' });
 ScrollReveal().reveal('.home-content h2, .home-content p, .about-content', { origin: 'right' });
 
 document.getElementById("contactForm").addEventListener("submit", async function (event) {
-    event.preventDefault();  // Prevent default form submission
+    event.preventDefault();
 
     const formData = {
         name: document.getElementById("name").value,
@@ -71,7 +70,7 @@ document.getElementById("contactForm").addEventListener("submit", async function
         document.getElementById("responseMessage").innerText = result.message;
 
         if (response.ok) {
-            document.getElementById("contactForm").reset(); // Reset form after successful submission
+            document.getElementById("contactForm").reset();
         }
     } catch (error) {
         document.getElementById("responseMessage").innerText = "Error sending message.";
@@ -90,6 +89,7 @@ async function sendMessage() {
 
     const userInput = document.getElementById('userInput');
     const chatBox = document.getElementById('chatBox');
+    const lang = document.getElementById('languageSelect').value;
 
     if (!userInput.value.trim()) {
         isProcessing = false;
@@ -97,11 +97,7 @@ async function sendMessage() {
         return;
     }
 
-    chatBox.innerHTML += `
-        <div class="user-message">
-            You: ${userInput.value}
-        </div>
-    `;
+    chatBox.innerHTML += `<div class="user-message">You (${lang.toUpperCase()}): ${userInput.value}</div>`;
 
     try {
         while (retryCount < MAX_RETRIES) {
@@ -112,7 +108,10 @@ async function sendMessage() {
                 const response = await fetch('https://flask-backend-29dd.onrender.com/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: userInput.value }),
+                    body: JSON.stringify({
+                        message: userInput.value,
+                        lang: lang
+                    }),
                     signal: controller.signal
                 });
 
@@ -121,12 +120,7 @@ async function sendMessage() {
                 if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
                 const data = await response.json();
-
-                chatBox.innerHTML += `
-                    <div class="bot-message">
-                        ${data.response.replace(/\n/g, '<br>')}
-                    </div>
-                `;
+                chatBox.innerHTML += `<div class="bot-message">${data.response.replace(/\n/g, '<br>')}</div>`;
 
                 retryCount = 0;
                 break;
@@ -137,13 +131,7 @@ async function sendMessage() {
         }
     } catch (error) {
         console.error('Fetch Error:', error);
-        chatBox.innerHTML += `
-            <div class="error">
-                ${error.message.includes('abort') ?
-                 'Request timed out (10s)' :
-                 'Connection error. Please try again'}
-            </div>
-        `;
+        chatBox.innerHTML += `<div class="error">${error.message.includes('abort') ? 'Request timed out (10s)' : 'Connection error. Please try again'}</div>`;
     } finally {
         document.getElementById('loading').style.display = 'none';
         isProcessing = false;
