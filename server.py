@@ -155,13 +155,18 @@ def handle_chat():
 def handle_chat():
     try:
         data = request.get_json()
+        if not data or 'message' not in data:
+            return jsonify({"error": "Invalid request format"}), 400
+
         response = jsonify({"response": chatbot.get_response(data['message'])})
         response.headers.add("Access-Control-Allow-Origin", "https://yassirham.github.io")
         return response
+
     except Exception as e:
         error_response = jsonify({"error": str(e)})
         error_response.headers.add("Access-Control-Allow-Origin", "https://yassirham.github.io")
         return error_response, 500
+
 
 @app.route("/send-message", methods=["OPTIONS"])
 def message_preflight():
