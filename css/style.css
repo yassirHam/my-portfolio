@@ -745,10 +745,10 @@ color: var(--text-color);
     border: 1px solid var(--main-color);
 }
 .bot-message {
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     line-height: 1.6;
     margin: 15px 0;
-    padding: 15px;
+    padding: 20px;
     color: var(--text-color);
     background: var(--main-color);
     border-radius: 8px;
