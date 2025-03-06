@@ -208,7 +208,6 @@ def handle_chat():
 @app.route("/send-message", methods=["OPTIONS", "POST"])
 def send_email():
     if request.method == "OPTIONS":
-        # Handle preflight request (CORS check)
         return jsonify({"message": "CORS preflight OK"}), 200
 
     try:
@@ -231,7 +230,7 @@ def send_email():
         return jsonify({"message": "Email sent successfully!"}), 200
 
     except Exception as e:
-        print("Error:", str(e))  # Log error to backend
+        print("Error:", str(e))
         return jsonify({"message": "Failed to send email", "error": str(e)}), 500
 
 
