@@ -78,18 +78,17 @@ document.getElementById("contactForm").addEventListener("submit", async function
         console.error("Error:", error);
     }
 });
-// Add to javascript.txt
+
 async function sendMessage() {
     const userInput = document.getElementById('userInput');
     const chatBox = document.getElementById('chatBox');
 
     if (!userInput.value.trim()) return;
 
-    // Add user message
     chatBox.innerHTML += `<div class="user-message">You: ${userInput.value}</div>`;
 
     try {
-        const response = await fetch('/chat', {
+        const response = await fetch('https://flask-backend-29dd.onrender.com/chat', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ message: userInput.value })
@@ -98,7 +97,7 @@ async function sendMessage() {
         const data = await response.json();
         chatBox.innerHTML += `<div class="bot-message">Bot: ${data.response}</div>`;
     } catch (error) {
-        chatBox.innerHTML += `<div class="error">Error: Could not get response</div>`;
+        chatBox.innerHTML += `<div class="error">Error: Could not connect to server</div>`;
     }
 
     userInput.value = '';
