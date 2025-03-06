@@ -17,6 +17,9 @@ import time
 load_dotenv()
 nltk.data.path.append(os.path.join(os.path.dirname(__file__), 'nltk_data'))
 
+nltk.download('punkt', download_dir='nltk_data', quiet=True)
+nltk.download('stopwords', download_dir='nltk_data', quiet=True)
+
 app = Flask(__name__)
 CORS(app, resources={
   r"/chat": {
