@@ -14,9 +14,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 
 load_dotenv()
-nltk.data.path.append("/usr/share/nltk_data")
-nltk.download('punkt', download_dir="/usr/share/nltk_data")
-nltk.download('stopwords', download_dir="/usr/share/nltk_data")
+nltk.data.path.append("./nltk_data")
+nltk.download('punkt', download_dir="./nltk_data", quiet=True)
+nltk.download('stopwords', download_dir="./nltk_data", quiet=True)
 
 app = Flask(__name__)
 CORS(app, resources={
@@ -74,7 +74,8 @@ class ChatBot:
   def _preprocess(self, text):
     text = re.sub(f'[{re.escape(string.punctuation)}]', '', text.lower())
     tokens = word_tokenize(text)
-    filtered_words = [word for word in tokens if word not in stopwords.words('english')]
+    stop_words = set(stopwords.words('english'))
+    filtered_words = [word for word in tokens if word not in stop_words]
     return ' '.join(filtered_words)
 
   def get_response(self, query):

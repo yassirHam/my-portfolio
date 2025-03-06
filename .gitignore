@@ -7,3 +7,4 @@ venv/
 .env
 *.pyc
 __pycache__/
+nltk_data/
