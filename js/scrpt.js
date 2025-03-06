@@ -79,13 +79,24 @@ document.getElementById("contactForm").addEventListener("submit", async function
     }
 });
 
+let isProcessing = false;
+let retryCount = 0;
+const MAX_RETRIES = 2;
+
 async function sendMessage() {
+    if (isProcessing) return;
+    isProcessing = true;
+    document.getElementById('loading').style.display = 'block';
+
     const userInput = document.getElementById('userInput');
     const chatBox = document.getElementById('chatBox');
 
-    if (!userInput.value.trim()) return;
+    if (!userInput.value.trim()) {
+        isProcessing = false;
+        document.getElementById('loading').style.display = 'none';
+        return;
+    }
 
-    // Display user message in chat box
     chatBox.innerHTML += `
         <div class="user-message">
             You: ${userInput.value}
@@ -93,31 +104,50 @@ async function sendMessage() {
     `;
 
     try {
-        const response = await fetch('https://flask-backend-29dd.onrender.com/chat', {
-            method: 'POST',
-            mode: 'cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ message: userInput.value })
-        });
+        while (retryCount < MAX_RETRIES) {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000);
 
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                const response = await fetch('https://flask-backend-29dd.onrender.com/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: userInput.value }),
+                    signal: controller.signal
+                });
 
-        const data = await response.json();
+                clearTimeout(timeoutId);
 
-        // Display bot response with formatting
-        chatBox.innerHTML += `
-            <div class="bot-message">
-                ${data.response.replace(/\n/g, '<br>')}
-            </div>
-        `;
+                if (!response.ok) throw new Error(`Server error: ${response.status}`);
+
+                const data = await response.json();
+
+                chatBox.innerHTML += `
+                    <div class="bot-message">
+                        ${data.response.replace(/\n/g, '<br>')}
+                    </div>
+                `;
+
+                retryCount = 0;
+                break;
+            } catch (error) {
+                retryCount++;
+                if (retryCount >= MAX_RETRIES) throw error;
+            }
+        }
     } catch (error) {
         console.error('Fetch Error:', error);
         chatBox.innerHTML += `
             <div class="error">
-                Error: ${error.message}
+                ${error.message.includes('abort') ?
+                 'Request timed out (10s)' :
+                 'Connection error. Please try again'}
             </div>
         `;
+    } finally {
+        document.getElementById('loading').style.display = 'none';
+        isProcessing = false;
+        userInput.value = '';
+        chatBox.scrollTop = chatBox.scrollHeight;
     }
-    userInput.value = '';
-    chatBox.scrollTop = chatBox.scrollHeight;
 }

@@ -12,16 +12,23 @@ import re
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
+import time
 
 load_dotenv()
-nltk.data.path.append("./nltk_data")
-nltk.download('punkt', download_dir="./nltk_data", quiet=True)
-nltk.download('stopwords', download_dir="./nltk_data", quiet=True)
+nltk.data.path.append(os.path.join(os.path.dirname(__file__), 'nltk_data'))
 
 app = Flask(__name__)
 CORS(app, resources={
-  r"/chat": {"origins": "https://yassirham.github.io"},
-  r"/send-message": {"origins": "https://yassirham.github.io"}
+  r"/chat": {
+    "origins": "https://yassirham.github.io",
+    "methods": ["POST", "OPTIONS"],
+    "allow_headers": ["Content-Type"]
+  },
+  r"/send-message": {
+    "origins": "https://yassirham.github.io",
+    "methods": ["POST", "OPTIONS"],
+    "allow_headers": ["Content-Type"]
+  }
 })
 
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -30,21 +37,6 @@ app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USERNAME'] = os.getenv("EMAIL_USER")
 app.config['MAIL_PASSWORD'] = os.getenv("EMAIL_PASS")
 mail = Mail(app)
-
-CORS(app, resources={
-    r"/chat": {
-        "origins": "https://yassirham.github.io",
-        "methods": ["POST", "OPTIONS"],
-        "allow_headers": ["Content-Type"],
-        "supports_credentials": True
-    },
-    r"/send-message": {
-        "origins": "https://yassirham.github.io",
-        "methods": ["POST", "OPTIONS"],
-        "allow_headers": ["Content-Type"],
-        "supports_credentials": True
-    }
-})
 
 
 class ChatBot:
@@ -89,8 +81,7 @@ class ChatBot:
   def _preprocess(self, text):
     text = re.sub(f'[{re.escape(string.punctuation)}]', '', text.lower())
     tokens = word_tokenize(text)
-    stop_words = set(stopwords.words('english'))
-    filtered_words = [word for word in tokens if word not in stop_words]
+    filtered_words = [word for word in tokens if word not in stopwords.words('english')]
     return ' '.join(filtered_words)
 
   def get_response(self, query):
@@ -115,41 +106,51 @@ class ChatBot:
 
   def _format_skills(self):
     skills = self.dataset[0]['skills']
-    return "<span style='font-size: 1.1rem; line-height: 1.5;'>Skills:<br>" + \
-           "<br>".join([f"• <strong>{k}</strong>: {', '.join(v)}" for k, v in skills.items()]) + \
-           "</span>"
+    return "<strong>Skills:</strong><br>" + "<br>".join([f"• {k}: {', '.join(v)}" for k, v in skills.items()])
+
+  def _format_education(self):
+    education = self.dataset[0]['education']
+    return "<strong>Education:</strong><br>" + "<br>".join([f"• {e['degree']} ({e['years']})" for e in education])
 
   def _format_projects(self):
     projects = self.dataset[0]['projects']
-    return "<span style='font-size: 1.1rem; line-height: 1.5;'>Projects:<br>" + \
-           "<br>".join([f"• <strong>{p['title']}</strong><br>&nbsp;&nbsp;{p['description']}" for p in projects]) + \
-           "</span>"
-  def _format_projects(self):
-    projects = self.dataset[0]['projects']
-    return "Projects:\n" + "\n".join([f"- {p['title']}: {p['description']}" for p in projects])
+    return "<strong>Projects:</strong><br>" + "<br>".join([f"• {p['title']}<br>  {p['description']}" for p in projects])
 
   def _format_experiences(self):
     experiences = self.dataset[0]['experiences']
-    return "Experience:\n" + "\n".join([f"- {e['position']} at {e['company']}" for e in experiences])
+    return "<strong>Experience:</strong><br>" + "<br>".join(
+      [f"• {e['position']} at {e['company']}" for e in experiences])
 
 
 chatbot = ChatBot()
 
-@app.route("/chat", methods=["POST"])
+
+@app.route("/chat", methods=["OPTIONS", "POST"])
 def handle_chat():
-    try:
-        data = request.get_json()
-        if not data or 'message' not in data:
-            return jsonify({"error": "Invalid request format"}), 400
+  start_time = time.time()
+  try:
+    if request.method == "OPTIONS":
+      response = jsonify({"status": "preflight"})
+      response.headers.add("Access-Control-Allow-Origin", "https://yassirham.github.io")
+      response.headers.add("Access-Control-Allow-Headers", "Content-Type")
+      response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
+      return response
 
-        response = jsonify({"response": chatbot.get_response(data['message'])})
-        response.headers.add("Access-Control-Allow-Origin", "https://yassirham.github.io")
-        return response
+    data = request.get_json()
+    if not data or 'message' not in data:
+      return jsonify({"error": "Invalid request format"}), 400
 
-    except Exception as e:
-        error_response = jsonify({"error": str(e)})
-        error_response.headers.add("Access-Control-Allow-Origin", "https://yassirham.github.io")
-        return error_response, 500
+    response_text = chatbot.get_response(data['message'])
+    response = jsonify({"response": response_text})
+    response.headers.add("Access-Control-Allow-Origin", "https://yassirham.github.io")
+    app.logger.info(f"Response time: {time.time() - start_time:.2f}s")
+    return response
+
+  except Exception as e:
+    app.logger.error(f"Chat error: {str(e)}")
+    error_response = jsonify({"error": "Internal server error"})
+    error_response.headers.add("Access-Control-Allow-Origin", "https://yassirham.github.io")
+    return error_response, 500
 
 
 @app.route("/send-message", methods=["OPTIONS"])
@@ -163,6 +164,9 @@ def _build_cors_preflight_response():
     response.headers.add("Access-Control-Allow-Methods", "POST, OPTIONS")
     return response
 
+
 if __name__ == "__main__":
+  nltk.download('punkt', download_dir='nltk_data', quiet=True)
+  nltk.download('stopwords', download_dir='nltk_data', quiet=True)
   port = int(os.environ.get("PORT", 5000))
   app.run(host="0.0.0.0", port=port)
