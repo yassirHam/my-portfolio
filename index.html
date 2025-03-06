@@ -26,16 +26,6 @@
         <a href="#chatbot">CHATBOT</a>
         <a href="#contact">CONTACT</a>
       </nav>
-
-      <select id="languageSelect">
-        <option value="en">English</option>
-        <option value="fr">Français</option>
-        <option value="ar">العربية</option>
-        <option value="es">Español</option>
-        <option value="de">Deutsch</option>
-        <option value="zh-cn">中文</option>
-    </select>
-
       <div class="bx bx-moon" id="darkMode-icon"></div>
       <div class="bx bx-menu" id="menu-icon"></div>
     </header>
@@ -201,6 +191,17 @@ Let’s connect and explore how technology and AI can drive innovation together!
 
 <section class="chatbot" id="chatbot">
     <h2 class="heading">CHAT <span>BOT</span></h2>
+   <div class="language-selector">
+        <label for="languageSelect">Choose Language:</label>
+        <select id="languageSelect">
+            <option value="en">English</option>
+            <option value="fr">Français</option>
+            <option value="ar">العربية</option>
+            <option value="es">Español</option>
+            <option value="de">Deutsch</option>
+            <option value="zh-cn">中文</option>
+        </select>
+     </div>
     <div class="chat-container">
         <div class="chat-box" id="chatBox"></div>
       <div id="loading" style="display: none;">

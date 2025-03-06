@@ -90,14 +90,14 @@ class ChatBot:
             return text
 
     def get_response(self, query, lang='en'):
-        try:
-            detected = self.translator.detect(query)
-            query_en = self._translate(query, detected.lang) if detected.lang != 'en' else query
-            response_en = self._process_query(query_en)
-            return self._translate(response_en, 'en', lang) if detected.lang != 'en' else response_en
-        except Exception as e:
-            app.logger.error(f"Chatbot error: {str(e)}")
-            return "I encountered an error processing your request. Please try again."
+      try:
+        translated_query = self.translator.translate(query, dest='en').text
+        english_response = self._process_query(translated_query)
+        translated_response = self.translator.translate(english_response, dest=lang).text
+        return translated_response
+      except Exception as e:
+        app.logger.error(f"Translation error: {str(e)}")
+        return "Translation error. Please try again."
 
     def _process_query(self, query):
         query = query.lower().strip()

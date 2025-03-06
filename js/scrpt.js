@@ -96,8 +96,11 @@ async function sendMessage() {
         document.getElementById('loading').style.display = 'none';
         return;
     }
-
-    chatBox.innerHTML += `<div class="user-message">You (${lang.toUpperCase()}): ${userInput.value}</div>`;
+    chatBox.innerHTML += `
+        <div class="user-message">
+            [${lang.toUpperCase()}] You: ${userInput.value}
+        </div>
+    `;
 
     try {
         while (retryCount < MAX_RETRIES) {
@@ -117,21 +120,40 @@ async function sendMessage() {
 
                 clearTimeout(timeoutId);
 
-                if (!response.ok) throw new Error(`Server error: ${response.status}`);
+                if (!response.ok) {
+                    throw new Error(`Server error: ${response.status}`);
+                }
 
                 const data = await response.json();
-                chatBox.innerHTML += `<div class="bot-message">${data.response.replace(/\n/g, '<br>')}</div>`;
+                chatBox.innerHTML += `
+                    <div class="bot-message">
+                        [${lang.toUpperCase()}] Bot: ${data.response.replace(/\n/g, '<br>')}
+                    </div>
+                `;
 
                 retryCount = 0;
                 break;
             } catch (error) {
                 retryCount++;
-                if (retryCount >= MAX_RETRIES) throw error;
+                if (retryCount >= MAX_RETRIES) {
+                    throw error;
+                }
             }
         }
     } catch (error) {
         console.error('Fetch Error:', error);
-        chatBox.innerHTML += `<div class="error">${error.message.includes('abort') ? 'Request timed out (10s)' : 'Connection error. Please try again'}</div>`;
+        let errorMessage = 'Connection error. Please try again.';
+        if (error.message.includes('abort')) {
+            errorMessage = 'Request timed out (10s). Please try again.';
+        } else if (error.message.includes('Failed to fetch')) {
+            errorMessage = 'Unable to connect to the server. Please check your internet connection.';
+        }
+
+        chatBox.innerHTML += `
+            <div class="error">
+                ${errorMessage}
+            </div>
+        `;
     } finally {
         document.getElementById('loading').style.display = 'none';
         isProcessing = false;
