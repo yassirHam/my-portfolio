@@ -815,6 +815,6 @@ color: var(--text-color);
 }
 
 .bot-message strong {
-    color: #ffff53;
-    font-weight: 600;
+    color: var(--text-color);
+    font-weight: 800;
 }
