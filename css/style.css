@@ -749,7 +749,8 @@ color: var(--text-color);
     line-height: 1.6;
     margin: 15px 0;
     padding: 15px;
-    background: rgba(109, 5, 5, 0.1);
+    color: var(--text-color);
+    background: var(--main-color);
     border-radius: 8px;
     white-space: pre-wrap;
 }
