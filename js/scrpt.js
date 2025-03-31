@@ -1,3 +1,4 @@
+
 window.onscroll = () => {
     let header = document.querySelector('.header');
     header.classList.toggle('sticky', window.scrollY > 100);
@@ -12,9 +13,7 @@ window.onscroll = () => {
         let id = sec.getAttribute('id');
 
         if (top >= offset && top < offset + height) {
-            navLinks.forEach(links => {
-                links.classList.remove('active');
-            });
+            navLinks.forEach(links => links.classList.remove('active'));
             document.querySelector(`header nav a[href*='${id}']`).classList.add('active');
         }
     });
@@ -37,6 +36,7 @@ darkModeIcon.onclick = () => {
     document.body.classList.toggle('dark-mode');
 };
 
+// Initialize ScrollReveal
 ScrollReveal({
     reset: true,
     distance: '80px',
@@ -48,7 +48,11 @@ ScrollReveal().reveal('.home-img img, .projects-container, .skills-container, .c
 ScrollReveal().reveal('.home-content h1, .about-img img', { origin: 'left' });
 ScrollReveal().reveal('.home-content h2, .home-content p, .about-content', { origin: 'right' });
 
-document.getElementById("contactForm").addEventListener("submit", async function (event) {
+// Contact Form Submission
+const contactForm = document.getElementById("contactForm");
+const responseMessage = document.getElementById("responseMessage");
+
+contactForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
     const formData = {
@@ -67,17 +71,18 @@ document.getElementById("contactForm").addEventListener("submit", async function
         });
 
         const result = await response.json();
-        document.getElementById("responseMessage").innerText = result.message;
+        responseMessage.innerText = result.message;
 
         if (response.ok) {
-            document.getElementById("contactForm").reset();
+            contactForm.reset();
         }
     } catch (error) {
-        document.getElementById("responseMessage").innerText = "Error sending message.";
+        responseMessage.innerText = "Error sending message.";
         console.error("Error:", error);
     }
 });
 
+// Chatbot Handling
 let isProcessing = false;
 let retryCount = 0;
 const MAX_RETRIES = 2;
@@ -96,11 +101,7 @@ async function sendMessage() {
         return;
     }
 
-    chatBox.innerHTML += `
-        <div class="user-message">
-            You: ${userInput.value}
-        </div>
-    `;
+    chatBox.innerHTML += `<div class="user-message">You: ${userInput.value}</div>`;
 
     try {
         while (retryCount < MAX_RETRIES) {
@@ -116,17 +117,10 @@ async function sendMessage() {
                 });
 
                 clearTimeout(timeoutId);
-
                 if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
                 const data = await response.json();
-
-                chatBox.innerHTML += `
-                    <div class="bot-message">
-                        ${data.response.replace(/\n/g, '<br>')}
-                    </div>
-                `;
-
+                chatBox.innerHTML += `<div class="bot-message">${data.response.replace(/\n/g, '<br>')}</div>`;
                 retryCount = 0;
                 break;
             } catch (error) {
@@ -136,13 +130,7 @@ async function sendMessage() {
         }
     } catch (error) {
         console.error('Fetch Error:', error);
-        chatBox.innerHTML += `
-            <div class="error">
-                ${error.message.includes('abort') ?
-                 'Request timed out (10s)' :
-                 'Connection error. Please try again'}
-            </div>
-        `;
+        chatBox.innerHTML += `<div class="error">${error.message.includes('abort') ? 'Request timed out (10s)' : 'Connection error. Please try again'}</div>`;
     } finally {
         document.getElementById('loading').style.display = 'none';
         isProcessing = false;
