@@ -1,155 +1,143 @@
 [
-{
-  "personal_info": {
-    "name": "Yassir Hamri",
-    "email": "yassir.hamri@etu.uae.ac.ma",
-    "phone": "+212 776-858895",
-    "portfolio": "https://yassirham.github.io/my-portfolio/",
-    "languages_spoken": ["English", "French", "Arabic"]
-  },
-  "professional_summary": "Passionate about digital transformation and IT, specializing in software development, enterprise architecture, and database systems. Proficient in Python (PySide), Java (OOP), and web development. Experienced in data structures, project management, and IT marketing.",
-  "education": [
-    {
-      "degree": "Transformation Digitale & Intelligence Artificielle",
-      "institution": "ENSA Hoceima",
-      "years": "2024-2027"
+  {
+    "personal_info": {
+      "name": "Yassir Hamri",
+      "email": "yassir.hamri@etu.uae.ac.ma",
+      "phone": "+212 776-858895",
+      "portfolio": "https://yassirham.github.io/my-portfolio/",
+      "languages_spoken": ["English", "French", "Arabic"]
     },
-    {
-      "degree": "Preparatory Classes (2 Years Preparatoires)",
-      "institution": "Ecole Nationale des Sciences Appliquées Al Hoceima",
-      "years": "2022-2024"
-    },
-    {
-      "degree": "Baccalaureate in Science Mathematics (Mention Bien)",
-      "institution": "High School",
-      "years": "2021-2022"
-    }
-  ],
-  "skills": {
-    "programming_languages": ["C", "Python", "Java (OOP)", "SQL"],
-    "web_development": ["Flask", "HTML", "CSS", "JavaScript", "PHP"],
-    "database_management": ["MySQL", "PostgreSQL"],
-    "artificial_intelligence": ["AI Matching", "RAG (Retrieval-Augmented Generation)", "LangChain"],
-    "data_processing": ["Pandas", "Web Scraping (BeautifulSoup, Selenium)"],
-    "cloud_and_deployment": ["Docker", "Render", "Railway", "API Development"],
-    "software_development": ["Object-Oriented Programming (OOP)", "Functional Programming", "Algorithm Optimization"],
-    "business_and_project_management": ["Business Architecture", "Agile Methodologies", "Problem-Solving", "Leadership"]
-  },
-  "certifications": [
-    {
-      "name": "Game-playing AI with Swift for TensorFlow (S4TF)",
-      "issuer": null,
-      "year": null
-    }
-  ],
-  "projects": [
-    {
-      "title": "Language Translation Tool",
-      "description": "Developed a tool to translate text between languages.",
-      "technologies": ["Google Translate API", "Microsoft Translator API"]
-    },
-    {
-      "title": "Personal Portfolio Website",
-      "description": "Built a website to showcase skills, projects, and resume. Integrated a Flask API and Render for handling 'Contact Me' form submissions and automatic email notifications.",
-      "technologies": ["HTML", "CSS", "JavaScript", "Flask", "Render"]
-    },
-    {
-      "title": "Chatbot for FAQs",
-      "description": "Created an NLP-powered chatbot to answer frequently asked questions.",
-      "technologies": ["NLTK", "SpaCy"]
-    },
-    {
-      "title": "AI-Powered Music Generation",
-      "description": "Developed a system to compose original music using AI techniques.",
-      "technologies": ["Recurrent Neural Networks (RNNs)", "Generative Adversarial Networks (GANs)"]
-    },
-    {
-      "title": "YouTube Summarizer & Q&A Tool",
-      "description": "Built an AI-powered tool to extract video transcripts, generate summaries, and enable real-time Q&A.",
-      "technologies": ["LangChain", "RAG", "Faiss", "Gradio"]
-    },
-    {
-      "title": "Room Management System (Gestion des Salles)",
-      "description": "Led a team project focused on optimizing scheduling and space allocation.",
-      "technologies": ["C language"]
-    },
-    {
-      "title": "Service & Demonstration Management System",
-      "description": "Contributed to streamlining service requests and demonstration scheduling by designing key functionalities in collaboration with teammates.",
-      "technologies": []
-    },
-    {
-      "title": "AI Matching & Proposal Assistance Platform",
-      "description": "Developed and deployed an AI-powered job matching platform. Built a Flask API, containerized with Docker, deployed on Render, and integrated a PostgreSQL database on Railway. Next steps include frontend development and refining matching algorithms.",
-      "technologies": ["Flask", "Docker", "PostgreSQL", "Render", "Railway"]
-    },
-    {
-      "title": "AI-Powered CV Writing Assistant",
-      "description": "Developed an application that assists users in creating professional resumes with smart suggestions through a modular GUI.",
-      "technologies": ["Python", "PySide", "SQLite"]
-    },
-    {
-      "title": "Internet Banking System",
-      "description": "Developed a secure and user-friendly system with features like user authentication, account management, transaction processing, and real-time balance updates.",
-      "technologies": ["Web technologies", "UX design"]
-    }
-  ],
-  "experiences": [
-    {
-      "position": "Artificial Intelligence Internship",
-      "company": "CodeAlpha",
-      "duration": "March 2025 - April 2025",
-      "description": "Completed a 1-month remote AI internship where I built 3 AI-based projects, adhered to strict deadlines, and shared project updates on LinkedIn with video explanations and GitHub repository links."
-    },
-    {
-      "position": "Participant - Data Hackathon on Sustainable Mobility",
-      "company": "Data Hackathon",
-      "duration": "April 2025 (Upcoming)",
-      "description": "Preparing to participate in a hackathon focused on urban mobility and environmental impact by collaborating with a team to develop data-driven solutions."
-    },
-    {
-      "position": "Global UGRAD Program (Semi-Finalist)",
-      "company": "Global UGRAD",
-      "duration": "2025",
-      "description": "Achieved semi-finalist status in the Global UGRAD program, demonstrating academic excellence and leadership."
-    }
-  ],
-  "cover_letter": {
-    "french": "Objet : Demande de stage PFA\nMadame, Monsieur,\nActuellement étudiant en 1re année de Transformation Digitale & Intelligence Artificielle à ENSA Hoceima, je souhaite effectuer un stage dans le cadre de mon Projet de Fin d’Année (PFA). Passionné par le développement de solutions numériques innovantes, je suis particulièrement intéressé par votre entreprise et ses projets technologiques.\nGrâce à ma formation, j’ai acquis des compétences en développement web (HTML, CSS, JavaScript), bases de données (MySQL), programmation (Python, Java), gestion de projets informatiques, ainsi qu’en architecture d’entreprise (Archimate, TOGAF) et transformation digitale.\nMotivé, rigoureux et curieux, je suis prêt à m’investir pleinement dans ce stage afin de contribuer à votre équipe tout en développant mes compétences. Je serais ravi de vous rencontrer pour échanger sur cette opportunité.\nDans l’attente de votre retour, je vous prie d’agréer, Madame, Monsieur, l’expression de mes salutations distinguées.",
-    "english": "Dear Sir/Madam,\nI am currently a first-year student in Digital Transformation & Artificial Intelligence at ENSA Hoceima, seeking an internship as part of my Final Year Project (PFA). Passionate about developing innovative digital solutions, I am particularly interested in your company and its technological projects.\nThrough my studies, I have acquired skills in web development (HTML, CSS, JavaScript), databases (MySQL), programming (Python, Java), IT project management, as well as enterprise architecture (Archimate, TOGAF) and digital transformation.\nI look forward to your response and remain at your disposal for any further information.\nBest regards,\nYassir Hamri"
-  },
-  "additional_info": {
-    "portfolio_links": [
-      "https://yassirham.github.io/my-portfolio/",
-      "https://yassirham.github.io/my-portfolio/",
-      "https://yassirham.github.io/my-portfolio/"
+    "professional_summary": "Passionate about digital transformation and IT, I specialize in software development, enterprise architecture, and database systems. Proficient in Python (PySide), Java (OOP), and web development, I also have expertise in data structures, project management, and IT marketing.",
+    "education": [
+      {
+        "degree": "Transformation Digitale & Intelligence Artificielle",
+        "institution": "ENSAH",
+        "years": "2024-2027"
+      },
+      {
+        "degree": "2 Années Préparatoires",
+        "institution": "Ecole Nationale des Sciences Appliquée Al Hoceima",
+        "years": "2022-2024"
+      },
+      {
+        "degree": "BAC Science Math B Mention Bien",
+        "institution": "High School",
+        "years": "2021-2022"
+      }
     ],
-    "objective": "To secure an internship opportunity for my Final Year Project (PFA) and further develop my skills in digital transformation and artificial intelligence by contributing to innovative technological projects.",
-    "passions": "Digital transformation, software development, enterprise architecture, and database systems."
-  },
-  "hr_questions": {
-    "why_hire": [
-      "Unique combination of technical skills (Python, Java, AI) and business architecture knowledge",
-      "Proven track record of delivering complete projects from concept to deployment",
-      "Strong problem-solving skills demonstrated in hackathons and complex projects",
-      "Adaptability shown through working with diverse tech stacks and international collaborations"
+    "skills": {
+      "programming_languages": ["C (OOP)", "Python (OOP)", "Java (OOP)"],
+      "web_development": ["Flask", "HTML", "CSS (Bootstrap)", "JavaScript (Vue, Express, Node, React)", "PHP (Laravel)"],
+      "database_management": ["MySQL", "PostgreSQL", "MongoDB"],
+      "artificial_intelligence": ["AI Matching", "RAG (Retrieval-Augmented Generation)", "LangChain"],
+      "data_processing": ["Pandas", "Web Scraping (BeautifulSoup, Selenium)"],
+      "cloud_and_deployment": ["Docker", "Render", "Railway", "API Development"],
+      "business_and_project_management": ["IT Project Management", "Business Architecture (TOGAF, ARCHIMATE)"]
+    },
+    "certifications": [
+      {
+        "name": "Game-playing AI with Swift for TensorFlow (S4TF)",
+        "issuer": null,
+        "year": null
+      }
     ],
-    "strengths": [
-      "Quick learner with ability to master new technologies rapidly",
-      "Excellent communicator fluent in 3 languages",
-      "Leadership experience in team projects",
-      "Commitment to continuous improvement and learning"
+    "projects": [
+      {
+        "title": "Language Translation Tool",
+        "description": "Developed a language translation tool to translate text between languages.",
+        "technologies": ["Google Translate API", "Microsoft Translator API"]
+      },
+      {
+        "title": "Personal Portfolio Website",
+        "description": "Built a personal portfolio website to showcase my skills, projects, and resume. Utilized HTML, CSS, and JavaScript for structure, styling, and interactivity. Integrated a Flask API and Render to handle the 'Contact Me' form submissions, allowing automatic email notifications.",
+        "technologies": ["HTML", "CSS", "JavaScript", "Flask", "Render"]
+      },
+      {
+        "title": "Chatbot for FAQs",
+        "description": "Created an NLP-powered chatbot to answer frequently asked questions.",
+        "technologies": ["NLTK", "SpaCy"]
+      },
+      {
+        "title": "YouTube Summarizer & Q&A Tool",
+        "description": "Completed a guided project on building an AI-powered YouTube summarizer and Q&A tool. Used LangChain, RAG, Faiss, and Gradio to extract video transcripts, generate summaries, and enable real-time Q&A.",
+        "technologies": ["LangChain", "RAG", "Faiss", "Gradio"]
+      },
+      {
+        "title": "Room Management System (Gestion des Salles)",
+        "description": "Led a team project focused on optimizing scheduling and space allocation. Developed the system using C language, improving efficiency in resource management.",
+        "technologies": ["C language"]
+      },
+      {
+        "title": "Service & Demonstration Management System",
+        "description": "Contributed to a project for streamlining service requests and demonstration scheduling. Designed key functionalities and collaborated closely with teammates.",
+        "technologies": []
+      },
+      {
+        "title": "AI Matching & Proposal Assistance Platform (Ongoing)",
+        "description": "Developed and deployed an AI-powered job matching platform. Built a Flask API and containerized it with Docker. Deployed the backend on Render and the database on Railway using PostgreSQL. Enabled efficient job recommendations and scalable data management. Next steps: Develop the frontend, refine matching algorithms, and optimize user experience.",
+        "technologies": ["Flask", "Docker", "PostgreSQL", "Render", "Railway"]
+      },
+      {
+        "title": "AI-Powered CV Writing Assistant",
+        "description": "Developed an application to help users create professional resumes with smart suggestions. Implemented Python, PySide, SQLite, and a modular GUI architecture for seamless user experience.",
+        "technologies": ["Python", "PySide", "SQLite"]
+      },
+      {
+        "title": "Internet Banking System",
+        "description": "Successfully developed a secure and user-friendly Internet Banking System using Laravel for back-end development and Bootstrap for responsive front-end design, following the MVC architectural pattern. Implemented key features such as user authentication, account management, transaction processing, and real-time balance updates.",
+        "technologies": ["Laravel", "Bootstrap", "MVC"]
+      }
     ],
-    "career_goals": [
-      "Short-term: Lead AI-driven digital transformation projects",
-      "Mid-term: Architect enterprise-level solutions combining AI and business strategy",
-      "Long-term: Mentor next generation of tech leaders in North Africa"
-    ]
-  },
-  "interview_answers": {
-    "challenge": "Led development of AI Matching Platform under tight deadlines while maintaining code quality",
-    "failure": "Initially struggled with time estimation, improved through Agile methodology adoption",
-    "success": "YouTube Summarizer tool adopted by 3 student organizations within first month of release"
+    "experiences": [
+      {
+        "position": "Artificial Intelligence Internship",
+        "company": "CodeAlpha",
+        "duration": "1st March 2025 - 1st April 2025",
+        "description": "1-month remote AI internship at CodeAlpha, a leading software development company, gaining hands-on experience in artificial intelligence and machine learning. Built 3 AI-based projects as part of the internship, adhering to the guidelines and deadlines provided. Shared project updates on LinkedIn, including video explanations and GitHub repository links."
+      },
+      {
+        "position": "Global UGRAD Program (Semi-Finalist)",
+        "company": "Global UGRAD",
+        "duration": "2025",
+        "description": "Reached the semi-finals of the Global UGRAD program, demonstrating academic excellence and leadership. Currently awaiting final results."
+      }
+    ],
+    "cover_letter": {
+      "french": "Objet : Demande de stage PFA\nMadame, Monsieur,\nActuellement étudiant en 1re année de Transformation Digitale & Intelligence Artificielle à ENSA Hoceima, je souhaite effectuer un stage dans le cadre de mon Projet de Fin d’Année (PFA). Passionné par le développement de solutions numériques innovantes, je suis particulièrement intéressé par votre entreprise et ses projets technologiques.\nGrâce à ma formation, j’ai acquis des compétences en développement web (HTML, CSS, JavaScript), bases de données (MySQL), programmation (Python, Java), gestion de projets informatiques, ainsi qu’en architecture d’entreprise (Archimate, TOGAF) et transformation digitale.\nMotivé, rigoureux et curieux, je suis prêt à m’investir pleinement dans ce stage afin de contribuer à votre équipe tout en développant mes compétences. Je serais ravi de vous rencontrer pour échanger sur cette opportunité.\nDans l’attente de votre retour, je vous prie d’agréer, Madame, Monsieur, l’expression de mes salutations distinguées.",
+      "english": "Dear Sir/Madam,\nI am currently a first-year student in Digital Transformation & Artificial Intelligence at ENSA Hoceima, seeking an internship as part of my Final Year Project (PFA). Passionate about developing innovative digital solutions, I am particularly interested in your company and its technological projects.\nThrough my studies, I have acquired skills in web development (HTML, CSS, JavaScript), databases (MySQL), programming (Python, Java), IT project management, as well as enterprise architecture (Archimate, TOGAF) and digital transformation.\nI look forward to your response and remain at your disposal for any further information.\nBest regards,\nYassir Hamri"
+    },
+    "additional_info": {
+      "portfolio_links": [
+        "https://yassirham.github.io/my-portfolio/",
+        "https://yassirham.github.io/my-portfolio/",
+        "https://yassirham.github.io/my-portfolio/"
+      ],
+      "objective": "To secure an internship opportunity for my Final Year Project (PFA) and further develop my skills in digital transformation and artificial intelligence by contributing to innovative technological projects.",
+      "passions": "Digital transformation, software development, enterprise architecture, and database systems."
+    },
+    "hr_questions": {
+      "why_hire": [
+        "Unique combination of technical skills (Python, Java, AI) and business architecture knowledge",
+        "Proven track record of delivering complete projects from concept to deployment",
+        "Strong problem-solving skills demonstrated in hackathons and complex projects",
+        "Adaptability shown through working with diverse tech stacks and international collaborations"
+      ],
+      "strengths": [
+        "Quick learner with ability to master new technologies rapidly",
+        "Excellent communicator fluent in 3 languages",
+        "Leadership experience in team projects",
+        "Commitment to continuous improvement and learning"
+      ],
+      "career_goals": [
+        "Short-term: Lead AI-driven digital transformation projects",
+        "Mid-term: Architect enterprise-level solutions combining AI and business strategy",
+        "Long-term: Mentor next generation of tech leaders in North Africa"
+      ]
+    },
+    "interview_answers": {
+      "challenge": "Led development of AI Matching Platform under tight deadlines while maintaining code quality",
+      "failure": "Initially struggled with time estimation, improved through Agile methodology adoption",
+      "success": "YouTube Summarizer tool adopted by 3 student organizations within first month of release"
+    }
   }
-}
 ]
